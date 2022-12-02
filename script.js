@@ -42,8 +42,8 @@ let instructions = {
 timeline.push(instructions);
 
 let test_stimuli = [
-  { stimulus: "img/blue.png"},
-  { stimulus: "img/orange.png"}
+  { stimulus: "img/blue.png", correct_response: 'f'},
+  { stimulus: "img/orange.png", correct_response: 'j'}
 ];
 
 let fixation = {
@@ -52,13 +52,20 @@ let fixation = {
   choices: "NO_KEYS",
   trial_duration: function(){
     return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+  },
+  data: {
+    task: 'fixation'
   }
 };
 
 let test = {
   type: jsPsychImageKeyboardResponse,
   stimulus: jsPsych.timelineVariable('stimulus'),
-  choices: ['f', 'j']
+  choices: ['f', 'j'],
+  data: {
+    task: 'response',
+    correct_response: jsPsych.timelineVariable('correct_response')
+  }
 }
 
 let test_procedure = {
